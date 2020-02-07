@@ -1,0 +1,59 @@
+version: '3'
+services:
+
+   cloudtop:
+      image: heliumdatastage/renci-guacamole-vnc:use-all-defaults
+      container_name: cloudtop
+      volumes:
+         - ${DATA_DIR:-./data}:/usr/local/renci/data
+      entrypoint: /init
+      ports: 
+         - 8080:8080
+
+   viewer:
+      image: ohif/viewer:v1.1.14.3708
+      container_name: viewer
+      volumes:
+         - ./config/nginx-with-proxy.conf:/etc/nginx/conf.d/default.conf
+      environment:
+         - MONGO_URL=mongodb://mongo:27017/ohif
+         - APP_CONFIG=/usr/share/nginx/html/app-config.js
+      depends_on:
+         - mongo
+         - orthanc
+      ports:
+         - "3000:80"
+
+   orthanc:
+      image: jodogne/orthanc-plugins:latest
+      container_name: orthanc
+      depends_on:
+         - postgres
+      volumes:
+         - ./config/orthanc.json:/etc/orthanc/orthanc.json
+      ports:
+         - "8042:8042"
+         - "4242:4242"
+
+   mongo:
+      image: mongo:latest
+      container_name: mongo
+      ports:
+         - "27017:27017"
+      volumes:
+        - ./mongo_data:/data/db
+
+   postgres:
+      image: postgres:11
+      container_name: postgres11
+      volumes:
+        #- /orthadb/postgresql/data/pgdata:/var/lib/postgresql/data
+        - ./orthadb/postgresql/data/pgdata:/var/lib/postgresql/data
+      environment:
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres-orthanc
+        - PGDATA=/var/lib/postgresql/data
+        - POSTGRES_DB=orthanc
+      ports:
+         - "5432:5432"
+     

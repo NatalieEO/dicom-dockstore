@@ -1,0 +1,20 @@
+version: 1.1
+service:
+  type: docker-compose
+  name: DICOM viewer
+  description: |
+    DICOM Viewer
+  files:
+     - docker-compose.yml
+     - README.md
+
+  scripts:
+    start: "docker-compose up -d"
+    port: "echo 3000"
+    stop: "docker-compose down"
+
+  environment:
+    data_dir:
+        default: "./data"
+        description: The location of the data
+
