@@ -1,0 +1,5 @@
+# For running DICOM viewer locally
+# DCM/DICOM files are expected to be in the "./data" directory
+
+environment:
+  DATA_DIR: ./data

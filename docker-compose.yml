@@ -5,7 +5,7 @@ services:
       image: heliumdatastage/renci-guacamole-vnc:use-all-defaults
       container_name: cloudtop
       volumes:
-         - ${DATA_DIR}:/usr/local/renci/data
+         - ${DATA_DIR:-/data}:/usr/local/renci/data
       entrypoint: /init
       ports: 
          - 8080:8080
