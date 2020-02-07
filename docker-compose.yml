@@ -5,7 +5,7 @@ services:
       image: heliumdatastage/renci-guacamole-vnc:use-all-defaults
       container_name: cloudtop
       volumes:
-         - ${DATA_DIR:-./data}:/usr/local/renci/data
+         - ${DATA_DIR}:/usr/local/renci/data
       entrypoint: /init
       ports: 
          - 8080:8080
@@ -45,9 +45,8 @@ services:
 
    postgres:
       image: postgres:11
-      container_name: postgres11
+      container_name: postgres
       volumes:
-        #- /orthadb/postgresql/data/pgdata:/var/lib/postgresql/data
         - ./orthadb/postgresql/data/pgdata:/var/lib/postgresql/data
       environment:
         - POSTGRES_USER=postgres

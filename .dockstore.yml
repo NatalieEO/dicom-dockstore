@@ -7,6 +7,8 @@ service:
   files:
      - docker-compose.yml
      - README.md
+     - config/nginx-with-proxy.conf
+     - config/orthanc.json
 
   scripts:
     start: "docker-compose up -d"
@@ -14,7 +16,7 @@ service:
     stop: "docker-compose down"
 
   environment:
-    data_dir:
+    DATA_DIR:
         default: "./data"
         description: The location of the data
 
