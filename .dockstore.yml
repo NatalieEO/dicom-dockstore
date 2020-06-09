@@ -19,7 +19,3 @@ service:
   environment:
     DATA_DIR:
         description: Overrides the location of the data. Only used for running locally.
-
-  mount:
-    # The platform launcher is expected to make its data available in the targetDirectory
-    targetDirectory: /data
