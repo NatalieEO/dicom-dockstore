@@ -1,6 +1,6 @@
 version: 1.2
 service:
-  type: docker-compose
+  subclass: docker-compose
   name: DICOM viewer
   description: |
     DICOM Viewer
